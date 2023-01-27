@@ -71,49 +71,49 @@ class MyFrame(wx.Frame):
         elif orderArr == ["Empty", "Small", "Large", "Medium"]:
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Empty", "Medium", "Small", "Large"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Empty", "Medium", "Large", "Small"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Empty", "Large", "Medium", "Small"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Empty", "Large", "Small", "Medium"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Empty", "Medium", "Large"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Empty", "Large", "Medium"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Medium", "Empty", "Large"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Medium", "Large", "Empty"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Large", "Empty", "Medium"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Large", "Medium", "Empty"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Empty", "Small", "Large"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Empty", "Large", "Small"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Small", "Empty", "Large"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Small", "Large", "Empty"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Large", "Empty", "Small"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Large", "Small", "Empty"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Empty", "Small", "Medium"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Empty", "Medium", "Small"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Small", "Empty", "Medium"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Small", "Medium", "Empty"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Medium", "Empty", "Small"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Medium", "Small", "Empty"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         else:
             return self.my_resultText.SetLabel("Du har indtastet noget forkert!")
         
