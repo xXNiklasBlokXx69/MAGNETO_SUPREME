@@ -33,6 +33,12 @@ class MyFrame(wx.Frame):
         #SÆT MOTOR OG MAGNET OP!
         self.MAG = 32 
         self.INTERRUPTER = 36
+        self.trin = 0
+        self.omgange = 0
+        self.max_trin = 0
+        self.max_omgange = 0
+        self.hastighed = 0
+        self.running = False
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.MAG, GPIO.OUT)
@@ -54,6 +60,20 @@ class MyFrame(wx.Frame):
         value3 = self.listpick3.GetString(choice3)
         value4 = self.listpick4.GetString(choice4)
         self.my_resultText.SetLabel(f'Sømmenes Rækkefølge er: {value1},{value2},{value3},{value4}')
+
+    def detect(self,c):
+        if self.running:
+            if GPIO.input(self.INTERRUPTER) == 1:
+                self.trin += 1
+                #print(self.trin)
+                if self.trin >= 4: # 4 = antallet af huller i skiven foran motoren
+                    self.omgange += 1
+                    self.trin = 0
+                if self.omgange >= self.max_omgange and self.trin >= self.max_trin:
+                    print("Omgang: "+str(self.omgange))
+                    print("Trin: "+str(self.trin))
+                    Emu.moveWheel(self, int(self.valgtMotor), 0)
+                    self.running = False
 
 
 if __name__ == "__main__":
