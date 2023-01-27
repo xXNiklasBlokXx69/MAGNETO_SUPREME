@@ -69,7 +69,7 @@ class MyFrame(wx.Frame):
         if orderArr == ["Empty", "Small", "Medium", "Large"]:
             return self.my_resultText.SetLabel("Sømmene er sorteret!")
         elif orderArr == ["Empty", "Small", "Large", "Medium"]:
-            return self.my_resultText.SetLabel(orderArr)
+            return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Empty", "Medium", "Small", "Large"]:
             return self.my_resultText.SetLabel(orderArr)
         elif orderArr == ["Empty", "Medium", "Large", "Small"]:
