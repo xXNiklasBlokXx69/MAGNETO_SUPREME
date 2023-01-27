@@ -32,6 +32,7 @@ class MyFrame(wx.Frame):
         panel.SetSizer(my_sizer)
         #SÆT MOTOR OG MAGNET OP!
         self.MAG = 32 
+        self.INTERRUPTER = 36
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.MAG, GPIO.OUT)
