@@ -63,9 +63,9 @@ class MyFrame(wx.Frame):
         value3 = self.listpick3.GetString(choice3)
         value4 = self.listpick4.GetString(choice4)
         inputArr = [value1, value2, value3, value4]
-        self.seeOrder(self, event, inputArr)
+        self.seeOrder(self, inputArr)
 
-    def seeOrder(self, event, orderArr):
+    def seeOrder(self, orderArr):
         if orderArr == ["Empty", "Small", "Medium", "Large"]:
             return self.my_resultText.SetLabel("Sømmene er sorteret!")
         elif orderArr == ["Empty", "Small", "Large", "Medium"]:
