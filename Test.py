@@ -65,7 +65,7 @@ class MyFrame(wx.Frame):
         inputArr = [value1, value2, value3, value4]
         self.seeOrder(self, inputArr)
 
-    def seeOrder(self, orderArr):
+    def seeOrder(self, event, orderArr):
         if orderArr == ["Empty", "Small", "Medium", "Large"]:
             return self.my_resultText.SetLabel("Sømmene er sorteret!")
         elif orderArr == ["Empty", "Small", "Large", "Medium"]:
