@@ -48,8 +48,8 @@ class MyFrame(wx.Frame):
         self.ids = Emu.scanUnits(self)
         for id in self.ids:
             print(f"Motor id: {id}")
-        Emu.wheelMode(2)
-        Emu.jointMode(9)
+        Emu.wheelMode(self, 2)
+        Emu.jointMode(self, 9)
         Emu.moveJoint(self, 9, 90)
         self.Show()
 
