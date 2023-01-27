@@ -48,6 +48,9 @@ class MyFrame(wx.Frame):
         self.ids = Emu.scanUnits(self)
         for id in self.ids:
             print(f"Motor id: {id}")
+        Emu.wheelMode(2)
+        Emu.jointMode(9)
+        Emu.moveJoint(self, 9, 90)
         self.Show()
 
     def on_press(self, event):
@@ -59,7 +62,62 @@ class MyFrame(wx.Frame):
         value2 = self.listpick2.GetString(choice2)
         value3 = self.listpick3.GetString(choice3)
         value4 = self.listpick4.GetString(choice4)
-        self.my_resultText.SetLabel(f'Sømmenes Rækkefølge er: {value1},{value2},{value3},{value4}')
+        inputArr = [value1, value2, value3, value4]
+        self.seeOrder(self, event, inputArr)
+
+    def seeOrder(self, event, orderArr):
+        if orderArr == ["Empty", "Small", "Medium", "Large"]:
+            return self.my_resultText.SetLabel("Sømmene er sorteret!")
+        elif orderArr == ["Empty", "Small", "Large", "Medium"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Empty", "Medium", "Small", "Large"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Empty", "Medium", "Large", "Small"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Empty", "Large", "Medium", "Small"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Empty", "Large", "Small", "Medium"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Small", "Empty", "Medium", "Large"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Small", "Empty", "Large", "Medium"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Small", "Medium", "Empty", "Large"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Small", "Medium", "Large", "Empty"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Small", "Large", "Empty", "Medium"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Small", "Large", "Medium", "Empty"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Medium", "Empty", "Small", "Large"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Medium", "Empty", "Large", "Small"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Medium", "Small", "Empty", "Large"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Medium", "Small", "Large", "Empty"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Medium", "Large", "Empty", "Small"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Medium", "Large", "Small", "Empty"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Large", "Empty", "Small", "Medium"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Large", "Empty", "Medium", "Small"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Large", "Small", "Empty", "Medium"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Large", "Small", "Medium", "Empty"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Large", "Medium", "Empty", "Small"]:
+            return self.my_resultText.SetLabel(orderArr)
+        elif orderArr == ["Large", "Medium", "Small", "Empty"]:
+            return self.my_resultText.SetLabel(orderArr)
+        else:
+            return self.my_resultText.SetLabel("Du har indtastet noget forkert!")
+        
+
 
     def detect(self,c):
         if self.running:
