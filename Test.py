@@ -2,6 +2,7 @@ import wx
 import wx.xrc
 from EmuControl import Emu
 import RPi.GPIO as GPIO
+import time
 
 class MyFrame(wx.Frame):
     def __init__(self):
@@ -69,50 +70,73 @@ class MyFrame(wx.Frame):
         if orderArr == ["Empty", "Small", "Medium", "Large"]:
             return self.my_resultText.SetLabel("Sømmene er sorteret!")
         elif orderArr == ["Empty", "Small", "Large", "Medium"]:
+            #Medium i 1, Large i 4, Medium i 3
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Empty", "Medium", "Small", "Large"]:
+            #Small i 1, Medium i 3, Small i 2
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Empty", "Medium", "Large", "Small"]:
+            #Small i 1, Large i 4, Medium i 3, Small i 2
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Empty", "Large", "Medium", "Small"]:
+            #Small i 1, Large i 4, Small i 2
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Empty", "Large", "Small", "Medium"]:
+            #Small i 1, Medium i 3, Large i 4, Small i 2
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Empty", "Medium", "Large"]:
+            #Small i 2
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Empty", "Large", "Medium"]:
+            #Small i 2, Medium i 1, Large i 4, Medium i 3
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Medium", "Empty", "Large"]:
+            #Medium i 3, Small i 2
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Medium", "Large", "Empty"]:
+            #Large i 4, Medium i 3, Small i 2
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Large", "Empty", "Medium"]:
+            #Medium i 3, Large i 4, Small i 2
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Small", "Large", "Medium", "Empty"]:
+            #Large i 4, Small i 2
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Empty", "Small", "Large"]:
+            #Small i 2, Medium i 3
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Empty", "Large", "Small"]:
+            #Small i 2, Large i 4, Medium i 3
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Small", "Empty", "Large"]:
+            #Medium i 3
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Small", "Large", "Empty"]:
+            #Large i 4, Medium i 3
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Large", "Empty", "Small"]:
+            #Medium i 3, Small i 1, Large i 4, Small i 2
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Medium", "Large", "Small", "Empty"]:
+            #Large i 4, Small i 2, Medium i 3
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Empty", "Small", "Medium"]:
+            #Small i 2, Medium i 3, Large i 4
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Empty", "Medium", "Small"]:
+            #Small i 2, Large i 4
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Small", "Empty", "Medium"]:
+            #Medium i 3, Large i 4
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Small", "Medium", "Empty"]:
+            #Large i 4
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Medium", "Empty", "Small"]:
+            #Medium i 3, Small i 2, Large i 4
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Large", "Medium", "Small", "Empty"]:
+            #Large i 4, Small i 1, Medium i 3, Small i 2
             return self.my_resultText.SetLabel(f"{orderArr}")
         else:
             return self.my_resultText.SetLabel("Du har indtastet noget forkert!")
@@ -132,6 +156,18 @@ class MyFrame(wx.Frame):
                     print("Trin: "+str(self.trin))
                     Emu.moveWheel(self, int(self.valgtMotor), 0)
                     self.running = False
+    
+    def getScrew(self, event):
+        Emu.moveJoint(self, 9, -90)
+        GPIO.output(self.MAG, GPIO.HIGH)
+        time.sleep(3)
+        Emu.moveJoint(self, 9, 90)
+    
+    def releaseScrew(self, event):
+        Emu.moveJoint(self, 9, -90)
+        GPIO.output(self.MAG, GPIO.LOW)
+        time.sleep(3)
+        Emu.moveJoint(self, 9, 90)
 
 
 if __name__ == "__main__":
