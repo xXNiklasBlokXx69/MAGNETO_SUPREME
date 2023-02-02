@@ -163,7 +163,7 @@ class MyFrame(wx.Frame):
                     self.running = False
     
     def getScrew(self, event):
-        Emu.moveJoint(self, 9, 50)
+        Emu.moveJoint(self, 9, -90)
         GPIO.output(self.MAG, GPIO.HIGH)
         time.sleep(3)
         Emu.moveJoint(self, 9, 90)
