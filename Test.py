@@ -71,6 +71,9 @@ class MyFrame(wx.Frame):
             return self.my_resultText.SetLabel("Sømmene er sorteret!")
         elif orderArr == ["Empty", "Small", "Large", "Medium"]:
             #Medium i 1, Large i 4, Medium i 3
+            Emu.moveWheel(self, 2, 200)
+            time.sleep(3)
+            Emu.moveWheel(self, 2, 0)
             return self.my_resultText.SetLabel(f"{orderArr}")
         elif orderArr == ["Empty", "Medium", "Small", "Large"]:
             #Small i 1, Medium i 3, Small i 2
@@ -158,7 +161,7 @@ class MyFrame(wx.Frame):
                     self.running = False
     
     def getScrew(self, event):
-        Emu.moveJoint(self, 9, -90)
+        Emu.moveJoint(self, 9, 50)
         GPIO.output(self.MAG, GPIO.HIGH)
         time.sleep(3)
         Emu.moveJoint(self, 9, 90)
