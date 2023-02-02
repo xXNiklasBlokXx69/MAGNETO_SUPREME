@@ -70,6 +70,7 @@ class MyFrame(wx.Frame):
         if orderArr == ["Empty", "Small", "Medium", "Large"]:
             self.getScrew(self)
             Emu.moveWheel(self, 2, 200)
+            time.sleep(2)
             Emu.moveWheel(self, 2, 0)
             self.releaseScrew(self)
             return self.my_resultText.SetLabel("Sømmene er sorteret!")
