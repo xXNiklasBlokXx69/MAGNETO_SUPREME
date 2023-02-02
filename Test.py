@@ -73,6 +73,11 @@ class MyFrame(wx.Frame):
             time.sleep(2)
             Emu.moveWheel(self, 2, 0)
             self.releaseScrew(self)
+            self.getScrew(self)
+            Emu.moveWheel(self, 2, -200)
+            time.sleep(2)
+            Emu.moveWheel(self, 2, 0)
+            self.releaseScrew(self)
             return self.my_resultText.SetLabel("Sømmene er sorteret!")
         elif orderArr == ["Empty", "Small", "Large", "Medium"]:
             #Medium i 1, Large i 4, Medium i 3
