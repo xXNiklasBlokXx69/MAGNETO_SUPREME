@@ -69,17 +69,17 @@ class MyFrame(wx.Frame):
         value4 = self.listpick4.GetString(choice4)
         value5 = self.listpick5.GetString(choice5)
         inputArr = [value1, value2, value3, value4, value5]
-        for value in inputArr:
-            if inputArr[value] == "Empty":
-                inputArr[value] == 0
-            if inputArr[value] == "Small":
-                inputArr[value] == 1
-            if inputArr[value] == "Medium":
-                inputArr[value] == 2
-            if inputArr[value] == "Large":
-                inputArr[value] == 3
-            if inputArr[value] == "Mega":
-                inputArr[value] == 4
+        for i in range(0, len(inputArr), 1):
+            if inputArr[i] == "Empty":
+                inputArr[i] == 0
+            if inputArr[i] == "Small":
+                inputArr[i] == 1
+            if inputArr[i] == "Medium":
+                inputArr[i] == 2
+            if inputArr[i] == "Large":
+                inputArr[i] == 3
+            if inputArr[i] == "Mega":
+                inputArr[i] == 4
         return self.my_resultText.SetLabel(f"{inputArr}")
         #self.sort_array(self, inputArr)
 
