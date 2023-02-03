@@ -87,7 +87,7 @@ class MyFrame(wx.Frame):
         KøreTid = skruehul * 2
         Tom = tom * 2
         hastighed = 200
-        SkrueTilTom = Tom - skruehul
+        SkrueTilTom = Tom - KøreTid
         Emu.moveWheel(self, 2, hastighed)    
         time.sleep(KøreTid)
         Emu.moveWheel(self, 2, 0)
@@ -102,7 +102,7 @@ class MyFrame(wx.Frame):
         if hastighed >= 0:
             hastighed *= -1
         Emu.moveWheel(self, 2, hastighed)    
-        time.sleep(tom)
+        time.sleep(Tom)
         Emu.moveWheel(self, 2, 0)
         #Køre hen til skrue
         #-------- (KøreTid)
