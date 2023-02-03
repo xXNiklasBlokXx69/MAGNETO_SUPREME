@@ -3,6 +3,7 @@ import wx.xrc
 from EmuControl import Emu
 import RPi.GPIO as GPIO
 import time
+import threading
 
 class MyFrame(wx.Frame):
     def __init__(self):
@@ -14,15 +15,17 @@ class MyFrame(wx.Frame):
         staticText.SetFont(font)
         staticText.SetLabel("SORTER SØM!!!") 
         my_sizer.Add(staticText, 0, wx.ALL | wx.EXPAND, 5)
-        mulighed = ["Empty","Small","Medium","Large"]
+        mulighed = ["Empty","Small","Medium","Large", "Mega"]
         self.listpick1 = wx.Choice(panel, choices = mulighed)
         self.listpick2 = wx.Choice(panel, choices = mulighed)
         self.listpick3 = wx.Choice(panel, choices = mulighed)
         self.listpick4 = wx.Choice(panel, choices = mulighed)
+        self.listpick5 = wx.Choice(panel, choices = mulighed)
         my_sizer.Add(self.listpick1, 0, wx.ALL | wx.CENTER, 5)
         my_sizer.Add(self.listpick2, 0, wx.ALL | wx.CENTER, 5)
         my_sizer.Add(self.listpick3, 0, wx.ALL | wx.CENTER, 5)
         my_sizer.Add(self.listpick4, 0, wx.ALL | wx.CENTER, 5)
+        my_sizer.Add(self.listpick5, 0, wx.ALL | wx.CENTER, 5)
         my_btn = wx.Button(panel, label="Press Me")
         my_btn.Bind(wx.EVT_BUTTON, self.on_press)
         my_sizer.Add(my_btn, 0, wx.ALL | wx.CENTER, 5)
@@ -59,12 +62,76 @@ class MyFrame(wx.Frame):
         choice2 = self.listpick2.GetSelection()
         choice3 = self.listpick3.GetSelection()
         choice4 = self.listpick4.GetSelection()
+        choice5 = self.listpick5.GetSelection()
         value1 = self.listpick1.GetString(choice1)
         value2 = self.listpick2.GetString(choice2)
         value3 = self.listpick3.GetString(choice3)
         value4 = self.listpick4.GetString(choice4)
-        inputArr = [value1, value2, value3, value4]
-        self.seeOrder(self, inputArr)
+        value5 = self.listpick5.GetString(choice5)
+        inputArr = [value1, value2, value3, value4, value5]
+        for value in inputArr:
+            if inputArr[value] == "Empty":
+                inputArr[value] == 0
+            if inputArr[value] == "Small":
+                inputArr[value] == 1
+            if inputArr[value] == "Medium":
+                inputArr[value] == 2
+            if inputArr[value] == "Large":
+                inputArr[value] == 3
+            if inputArr[value] == "Mega":
+                inputArr[value] == 4
+        return self.my_resultText.SetLabel(f"{inputArr}")
+        #self.sort_array(self, inputArr)
+
+    def OmBytSøm(self, event, tom, skruehul):
+        KøreTid = skruehul * 2
+        Tom = tom * 2
+        hastighed = 200
+        SkrueTilTom = Tom - skruehul
+        Emu.moveWheel(self, 2, hastighed)    
+        time.sleep(KøreTid)
+        Emu.moveWheel(self, 2, 0)
+        self.getScrew(self)
+        if skruehul > Tom:
+            hastighed *= -1
+            SkrueTilTom = -SkrueTilTom
+        Emu.moveWheel(self, 2, hastighed)    
+        time.sleep(SkrueTilTom)
+        Emu.moveWheel(self, 2, 0)
+        self.releaseScrew(self)
+        if hastighed >= 0:
+            hastighed *= -1
+        Emu.moveWheel(self, 2, hastighed)    
+        time.sleep(tom)
+        Emu.moveWheel(self, 2, 0)
+        #Køre hen til skrue
+        #-------- (KøreTid)
+        #hentsøm funktion
+        #-------- #henter søm low high something det har du styr paa
+        #kør til tomt hul
+        #-------- (SkrueTilTom)
+        #nulstiller til start hul
+        #-------- (SkrueTilTom - skruehul)
+        return
+
+    def sort_array(self, event, arr):
+        result =  [0,1,2,3,4]
+        
+        while not arr == result: #indtil resultatet er det givede array
+            for i in range(0, len(arr), 1):             # gennemgår tal i input array
+                flag = False
+                if arr[i] != i and arr[i] != 0:                # hvis array nummer ikke passer til index
+                    for j in range(0, len(arr), 1):     # Gennemgår alle indexer for at finde index der indolder 0
+                        if arr[j] == 0 and flag == False:      # hvis værdi i indexet er = 0 og ikke er løst før
+                            
+                            function1_thread = threading.Thread(target=self.OmBytSøm(self, j, i))
+                            function1_thread.start()
+                            function1_thread.join()
+                            
+                            arr[j], arr[i] = arr[i], arr[j]    # byt om på inde i og index j, opdatere vores array
+                            print(arr, "  Skrue Rykket")
+                            flag = True                        # flagger at vores næste ryk er bergnet
+        return self.my_resultText.SetLabel("Sømmene er sorteret!")
 
     def seeOrder(self, event, orderArr):
         if orderArr == ["Empty", "Small", "Medium", "Large"]:
