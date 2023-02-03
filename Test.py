@@ -104,7 +104,7 @@ class MyFrame(wx.Frame):
         if hastighed >= 0:
             hastighed *= -1
         Emu.moveWheel(self, 2, hastighed)    
-        time.sleep(KøreTid - SkrueTilTom)
+        time.sleep(abs(KøreTid - SkrueTilTom))
         Emu.moveWheel(self, 2, 0)
         time.sleep(1)
         #Køre hen til skrue
