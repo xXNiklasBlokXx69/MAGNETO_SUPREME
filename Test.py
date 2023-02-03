@@ -125,9 +125,9 @@ class MyFrame(wx.Frame):
                     for j in range(0, len(arr), 1):     # Gennemgår alle indexer for at finde index der indolder 0
                         if arr[j] == 0 and flag == False:      # hvis værdi i indexet er = 0 og ikke er løst før
                             
-                            #function1_thread = threading.Thread(target=self.OmBytSøm(self, j, i))
-                            #function1_thread.start()
-                            #function1_thread.join()
+                            function1_thread = threading.Thread(target=self.OmBytSøm(self, j, i))
+                            function1_thread.start()
+                            function1_thread.join()
                             
                             arr[j], arr[i] = arr[i], arr[j]    # byt om på inde i og index j, opdatere vores array
                             print(arr, "  Skrue Rykket")
