@@ -70,6 +70,7 @@ class MyFrame(wx.Frame):
         value5 = self.listpick5.GetString(choice5)
         inputArr = [value1, value2, value3, value4, value5]
         for i in range(0, len(inputArr), 1):
+            print(inputArr[i])
             if inputArr[i] == "Empty":
                 inputArr[i] == 0
             if inputArr[i] == "Small":
