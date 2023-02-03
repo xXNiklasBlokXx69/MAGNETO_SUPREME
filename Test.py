@@ -81,8 +81,7 @@ class MyFrame(wx.Frame):
                 inputArr[i] = 3
             if inputArr[i] == "Mega":
                 inputArr[i] = 4
-        return self.my_resultText.SetLabel(f"{inputArr}")
-        #self.sort_array(self, inputArr)
+        self.sort_array(self, inputArr)
 
     def OmBytSøm(self, event, tom, skruehul):
         KøreTid = skruehul * 2
