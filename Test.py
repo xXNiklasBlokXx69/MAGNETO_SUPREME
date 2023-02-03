@@ -92,7 +92,7 @@ class MyFrame(wx.Frame):
         time.sleep(KøreTid)
         Emu.moveWheel(self, 2, 0)
         self.getScrew(self)
-        if skruehul > Tom:
+        if skruehul > tom:
             hastighed *= -1
             SkrueTilTom = -SkrueTilTom
         Emu.moveWheel(self, 2, hastighed)    
