@@ -72,15 +72,15 @@ class MyFrame(wx.Frame):
         for i in range(0, len(inputArr), 1):
             print(inputArr[i])
             if inputArr[i] == "Empty":
-                inputArr[i] == 0
+                inputArr[i] = 0
             if inputArr[i] == "Small":
-                inputArr[i] == 1
+                inputArr[i] = 1
             if inputArr[i] == "Medium":
-                inputArr[i] == 2
+                inputArr[i] = 2
             if inputArr[i] == "Large":
-                inputArr[i] == 3
+                inputArr[i] = 3
             if inputArr[i] == "Mega":
-                inputArr[i] == 4
+                inputArr[i] = 4
         return self.my_resultText.SetLabel(f"{inputArr}")
         #self.sort_array(self, inputArr)
 
