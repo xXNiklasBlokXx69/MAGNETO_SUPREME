@@ -153,13 +153,13 @@ class MyFrame(wx.Frame):
     def getScrew(self, event):
         Emu.moveJoint(self, 9, -90)
         GPIO.output(self.MAG, GPIO.HIGH)
-        time.sleep(1)
+        time.sleep(0.25)
         Emu.moveJoint(self, 9, 90)
     
     def releaseScrew(self, event):
         Emu.moveJoint(self, 9, 0)
         GPIO.output(self.MAG, GPIO.LOW)
-        time.sleep(0.5)
+        time.sleep(0.25)
         Emu.moveJoint(self, 9, 90)
 
 
