@@ -1,3 +1,4 @@
+#importere packages
 import wx 
 import wx.xrc
 from EmuControl import Emu
@@ -6,35 +7,35 @@ import time
 import threading
 
 class MyFrame(wx.Frame):
-    def __init__(self):
-        super().__init__(parent=None, title="Hello World")
-        panel = wx.Panel(self)
+    def __init__(self):#Opsætning af UI
+        super().__init__(parent=None, title="Sorter Søm")#opsætning af UI
+        panel = wx.Panel(self) #Lav panel til elementerne
         my_sizer = wx.BoxSizer(wx.VERTICAL)
-        staticText = wx.StaticText(panel, -1, style = wx.ALIGN_CENTER) 
+        staticText = wx.StaticText(panel, -1, style = wx.ALIGN_CENTER) #Overskrift
         font = wx.Font(18, wx.ROMAN, wx.ITALIC, wx.NORMAL)
         staticText.SetFont(font)
         staticText.SetLabel("SORTER SØM!!!") 
-        my_sizer.Add(staticText, 0, wx.ALL | wx.EXPAND, 5)
-        mulighed = ["Empty","Small","Medium","Large", "Mega"]
-        self.listpick1 = wx.Choice(panel, choices = mulighed)
+        my_sizer.Add(staticText, 0, wx.ALL | wx.EXPAND, 5)#Tilføjer Overskrift til panelet
+        mulighed = ["Empty","Small","Medium","Large", "Mega"]#liste med sømstørrelser
+        self.listpick1 = wx.Choice(panel, choices = mulighed)#valginputs
         self.listpick2 = wx.Choice(panel, choices = mulighed)
         self.listpick3 = wx.Choice(panel, choices = mulighed)
         self.listpick4 = wx.Choice(panel, choices = mulighed)
         self.listpick5 = wx.Choice(panel, choices = mulighed)
-        my_sizer.Add(self.listpick1, 0, wx.ALL | wx.CENTER, 5)
+        my_sizer.Add(self.listpick1, 0, wx.ALL | wx.CENTER, 5)#tilføj til panelet
         my_sizer.Add(self.listpick2, 0, wx.ALL | wx.CENTER, 5)
         my_sizer.Add(self.listpick3, 0, wx.ALL | wx.CENTER, 5)
         my_sizer.Add(self.listpick4, 0, wx.ALL | wx.CENTER, 5)
         my_sizer.Add(self.listpick5, 0, wx.ALL | wx.CENTER, 5)
-        my_btn = wx.Button(panel, label="Press Me")
-        my_btn.Bind(wx.EVT_BUTTON, self.on_press)
-        my_sizer.Add(my_btn, 0, wx.ALL | wx.CENTER, 5)
-        self.my_resultText = wx.StaticText(panel,-1, style = wx.ALIGN_CENTER)
+        my_btn = wx.Button(panel, label="Press Me")#Lav knap
+        my_btn.Bind(wx.EVT_BUTTON, self.on_press)#Tilføj function til knap
+        my_sizer.Add(my_btn, 0, wx.ALL | wx.CENTER, 5)#Tilføj til UI
+        self.my_resultText = wx.StaticText(panel,-1, style = wx.ALIGN_CENTER)#Resultattekst
         self.my_resultText.SetFont(font)
         self.my_resultText.SetLabel("RESULTAT SKER HER!")
-        my_sizer.Add(self.my_resultText)
+        my_sizer.Add(self.my_resultText)#Tilføj resultattekst til UI
         panel.SetSizer(my_sizer)
-        #SÆT MOTOR OG MAGNET OP!
+        #Opsætning af motorer og magnet
         self.MAG = 32 
         self.INTERRUPTER = 36
         self.trin = 0
@@ -44,33 +45,36 @@ class MyFrame(wx.Frame):
         self.hastighed = 0
         self.running = False
         GPIO.setwarnings(False)
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(self.MAG, GPIO.OUT)
+        GPIO.setmode(GPIO.BOARD)#sætter GPIO på Raspberry Pi
+        GPIO.setup(self.MAG, GPIO.OUT)#Sætter magnet som output
         GPIO.setup(self.INTERRUPTER, GPIO.IN, pull_up_down=GPIO.PUD_UP)  # Sætter pull up til high (3.3V)
         GPIO.add_event_detect(self.INTERRUPTER, GPIO.BOTH, callback=self.detect,bouncetime=200)
-        Emu.start(self)
-        self.ids = Emu.scanUnits(self)
+        Emu.start(self)#Starter motorer
+        self.ids = Emu.scanUnits(self)#Scanner id'er 
         for id in self.ids:
-            print(f"Motor id: {id}")
+            print(f"Motor id: {id}")#printer motor id i kommandoprompt
+        #Sætter motor mode 
         Emu.wheelMode(self, 2)
         Emu.jointMode(self, 9)
+        #Sætter magnetmotor til normal
         Emu.moveJoint(self, 9, 90)
-        self.Show()
+        self.Show()#Vis UI
 
     def on_press(self, event):
+        #Får ID af de valgte input
         choice1 = self.listpick1.GetSelection()
         choice2 = self.listpick2.GetSelection()
         choice3 = self.listpick3.GetSelection()
         choice4 = self.listpick4.GetSelection()
         choice5 = self.listpick5.GetSelection()
+        #Får string, som er valgt
         value1 = self.listpick1.GetString(choice1)
         value2 = self.listpick2.GetString(choice2)
         value3 = self.listpick3.GetString(choice3)
         value4 = self.listpick4.GetString(choice4)
         value5 = self.listpick5.GetString(choice5)
-        inputArr = [value1, value2, value3, value4, value5]
-        for i in range(0, len(inputArr), 1):
-            print(inputArr[i])
+        inputArr = [value1, value2, value3, value4, value5]#liste med ïnputstrenge
+        for i in range(0, len(inputArr), 1):#Tjekker liste for at lave strenge om til indexer
             if inputArr[i] == "Empty":
                 inputArr[i] = 0
             if inputArr[i] == "Small":
@@ -81,40 +85,37 @@ class MyFrame(wx.Frame):
                 inputArr[i] = 3
             if inputArr[i] == "Mega":
                 inputArr[i] = 4
-        self.sort_array(self, inputArr)
+        self.sort_array(self, inputArr)#Funktionskald til sort_array funktion
 
     def OmBytSøm(self, event, tom, skruehul):
-        KøreTid = skruehul * 2
-        Tom = tom * 2
-        hastighed = 200
-        SkrueTilTom = Tom - KøreTid
+        KøreTid = skruehul * 2#tid fra start til skruen
+        Tom = tom * 2 #tid fra start til tom hul
+        hastighed = 200 
+        SkrueTilTom = Tom - KøreTid #tid mellem hul og skrue
+        #Køre hen til skrue
         Emu.moveWheel(self, 2, hastighed)    
         time.sleep(KøreTid)
         Emu.moveWheel(self, 2, 0)
+        #hentsøm funktion
         self.getScrew(self)
-
+        #hvis skrue lægger efter tom hul, så kør baglæns
         if skruehul > tom:
             hastighed *= -1
             SkrueTilTom = -SkrueTilTom
+        #kør til tomt hul
         Emu.moveWheel(self, 2, hastighed)    
         time.sleep(SkrueTilTom)
+        #slip skrue
         Emu.moveWheel(self, 2, 0)
         self.releaseScrew(self)
-
+        #Hvis hastigheden ikke er baglæns, sæt den baglæns
         if hastighed >= 0:
             hastighed *= -1
+        #nulstiller til start hul
         Emu.moveWheel(self, 2, hastighed)    
         time.sleep(abs(KøreTid - SkrueTilTom)+.1)
         Emu.moveWheel(self, 2, 0)
         time.sleep(1)
-        #Køre hen til skrue
-        #-------- (KøreTid)
-        #hentsøm funktion
-        #-------- #henter søm low high something det har du styr paa
-        #kør til tomt hul
-        #-------- (SkrueTilTom)
-        #nulstiller til start hul
-        #-------- (SkrueTilTom - skruehul)
         return
 
     def sort_array(self, event, arr):
@@ -151,16 +152,16 @@ class MyFrame(wx.Frame):
                     self.running = False
     
     def getScrew(self, event):
-        Emu.moveJoint(self, 9, -90)
-        GPIO.output(self.MAG, GPIO.HIGH)
+        Emu.moveJoint(self, 9, -90)#Kør magnet ned
+        GPIO.output(self.MAG, GPIO.HIGH)#tænd magnet, få skrue
         time.sleep(0.25)
-        Emu.moveJoint(self, 9, 90)
+        Emu.moveJoint(self, 9, 90)#Kør magnet op
     
     def releaseScrew(self, event):
-        Emu.moveJoint(self, 9, 0)
-        GPIO.output(self.MAG, GPIO.LOW)
+        Emu.moveJoint(self, 9, 0)#Kør magnet halvvejs ned
+        GPIO.output(self.MAG, GPIO.LOW)#sluk magnet, slip skrue
         time.sleep(0.25)
-        Emu.moveJoint(self, 9, 90)
+        Emu.moveJoint(self, 9, 90)#Kør magnet op
 
 
 if __name__ == "__main__":
