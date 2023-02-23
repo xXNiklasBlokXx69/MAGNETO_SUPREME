@@ -74,7 +74,7 @@ class MyFrame(wx.Frame):
         value4 = self.listpick4.GetString(choice4)
         value5 = self.listpick5.GetString(choice5)
         inputArr = [value1, value2, value3, value4, value5]#liste med ïnputstrenge
-        for i in range(0, len(inputArr), 1):#Tjekker liste for at lave strenge om til indexer
+        for i in range(0, len(inputArr), 1):#Tjekker liste for at lave strenge om til tal
             if inputArr[i] == "Empty":
                 inputArr[i] = 0
             if inputArr[i] == "Small":
